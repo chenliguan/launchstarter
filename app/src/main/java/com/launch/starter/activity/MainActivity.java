@@ -1,7 +1,6 @@
 package com.launch.starter.activity;
 
 import android.os.Bundle;
-import android.view.animation.AlphaAnimation;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.alibaba.fastjson.JSON;
 import com.launch.starter.R;
 import com.launch.starter.adapter.NewsAdapter;
-import com.launch.starter.adapter.OnFeedShowCallBack;
+import com.launch.starter.listener.OnFeedShowCallBack;
 import com.launch.starter.bean.NewsItem;
 import com.launch.starter.core.DelayInitDispatcher;
 import com.launch.starter.net.RetrofitNewsUtils;
