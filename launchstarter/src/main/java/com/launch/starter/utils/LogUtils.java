@@ -10,14 +10,14 @@ public class LogUtils {
         if (!sDebug) {
             return;
         }
-        Log.i("DispatcherLog",msg);
+        Log.i("DispatcherLog", msg);
     }
 
     public static void e(String msg) {
         if (!sDebug) {
             return;
         }
-        Log.e("DispatcherLog",msg);
+        Log.e("DispatcherLog", msg);
     }
 
     public static boolean isDebug() {

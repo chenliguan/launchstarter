@@ -10,8 +10,8 @@ import com.launch.starter.stat.TaskStat;
 import com.launch.starter.task.DispatchRunnable;
 import com.launch.starter.task.Task;
 import com.launch.starter.task.TaskCallBack;
-import com.launch.starter.utils.LogUtils;
 import com.launch.starter.utils.LaunchStarterUtils;
+import com.launch.starter.utils.LogUtils;
 import com.launch.starter.utils.Utils;
 
 import java.util.ArrayList;
@@ -31,6 +31,9 @@ public class AsyncInitDispatcher {
      * 线程最长等待时间，避免ANR
      */
     private static final int WAIT_TIME = 10000;
+
+    private volatile static AsyncInitDispatcher sInstance;
+
 
     private long mStartTime;
     private static Context sContext;
@@ -67,9 +70,15 @@ public class AsyncInitDispatcher {
      */
     private AtomicInteger mAnalyseCount = new AtomicInteger();
 
+
     private AsyncInitDispatcher() {
     }
 
+    /**
+     * 初始化，在createInstance()前先调用
+     *
+     * @param context
+     */
     public static void init(Context context) {
         if (context != null) {
             sContext = context;
@@ -79,15 +88,24 @@ public class AsyncInitDispatcher {
     }
 
     /**
-     * 注意：每次获取的都是新对象
+     * 注意：每次获取的都是同一个对象
      *
      * @return
      */
     public static AsyncInitDispatcher createInstance() {
         if (!sHasInit) {
-            throw new RuntimeException("must call AsyncInitDispatcher.init first");
+            throw new RuntimeException("必须先调用 AsyncInitDispatcher.init 进行初始化");
         }
-        return new AsyncInitDispatcher();
+
+        if (sInstance == null) {
+            synchronized (AsyncInitDispatcher.class) {
+                if (sInstance == null) {
+                    sInstance = new AsyncInitDispatcher();
+                }
+            }
+        }
+
+        return sInstance;
     }
 
     /**
